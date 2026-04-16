@@ -5,31 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unit Converter</title>
     <style>
-        body{
-            background-color: rgba(0, 255, 191, 0.486);
-           
-            
-        }
-        form{
-             max-width: 200px;
-            max-height: fit-content;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            display: inline-flex;
-        
-        }
+       body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: linear-gradient(135deg, #00c9ff, #92fe9d);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+      form {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        width: 300px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
         input{
-            border-radius: 10%;
+            border-radius: 8%;
         }
         select{
-            border-radius: 12%;
+            border-radius: 8%;
         }
-        label{
-            font-size: medium;
-            font-weight: bold;
-            font-family: Arial, Helvetica, sans-serif;
-        }
+         label {
+        font-weight: bold;
+        font-size: 14px;
+        color: #333;
+    }
     </style>
 </head>
 <body>
@@ -57,6 +62,9 @@
         <input type="submit" value="convert">
 
     </form>
+    {{if .}}
+    <p>{{.Input}} → {{.Output}}</p>
+    {{end}}
 </body>
 </html>
 
