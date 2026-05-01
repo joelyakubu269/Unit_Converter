@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Converter</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="links">
+        <a href="index.html">length</a>
+        <a href="weight.html">Weight</a>
+        <a href="temperature.html">Temperature</a>
+    </div>
+    <br>
+    <form method="post" name="length">
+        <div id="units">
+           <div> <label for="length">Enter the length to convert</label>
+            <input type="text" id="length" placeholder="enter length to be converted" name="value">
+            </div>
+            <div> <label for="from">unit to convert from</label>
+           <select name="from" id="from">
+                <option disabled selected>select an option</option>
+                <option value="metres">Metres</option>
+                <option value="kilometres">Kilometres</option>
+                <option value="centimetres">Centimetres</option>
+             </select> </div>
+             <div><label for="to">Enter the length to convert</label>
+             <select name="to" id="to">
+                <option disabled selected>select an option</option>
+                <option value="metres">Metres</option>
+                <option value="kilometres">Kilometres</option>
+                <option value="centimetres">Centimetres</option>
+             </select></div>
+            <div><input type="submit" name="convert" value="convert"></div>
+            
+        </div>
+    </form>
+</body>
+</html>

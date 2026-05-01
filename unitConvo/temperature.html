@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weight converter</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+     <div id="links">
+        <a href="index.html">length</a>
+        <a href="weight.html">Weight</a>
+        <a href="temperature.html">Temperature</a>
+    </div>
+    <br>
+    <form method="post">
+        <div id="units">
+           <div> <label for="temperature">Enter the weight to convert</label>
+            <input type="text" id="temperature" placeholder="enter temperature to be converted" name="value">
+            </div>
+            <div> <label for="from">unit to convert from</label>
+           <select name="from" id="from">
+                <option disabled selected>select an option</option>
+                <option value="kelvin">kelvin</option>
+                <option value="celsius">celsius</option>
+                <option value="fahrenheit">fahrenheit</option>
+             </select> </div>
+             <div><label for="to">Enter the unit to be converted to</label>
+             <select name="to" id="to">
+               <option disabled selected>select an option</option>
+                <option value="kelvin">kelvin</option>
+                <option value="celsius">celsius</option>
+                <option value="fahrenheit">fahrenheit</option>
+             </select></div>
+            <div><input type="submit" name="convert" value="convert"></div>
+            
+        </div>
+    </form>
+</body>
+</html>
