@@ -41,11 +41,6 @@ func handleLength(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleWeight(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPost {
-		http.Error(w, "only POST allowed", http.StatusBadRequest)
-		return
-	}
-
 	n, from, to, err := parseValue(r)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
@@ -87,11 +82,6 @@ func handleWeight(w http.ResponseWriter, r *http.Request) {
 	})
 }
 func handleTemp(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPost {
-		http.Error(w, "only POST allowed", http.StatusBadRequest)
-		return
-	}
-
 	n, from, to, err := parseValue(r)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
