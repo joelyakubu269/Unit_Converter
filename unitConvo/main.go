@@ -4,13 +4,21 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	
+
 	"strconv"
 )
+
+func home(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodGet {
+		http.ServeFile(w, r, "index.html")
+		return
+	}
+}
 func handleLength(w http.ResponseWriter, r *http.Request) {
-	n,from,to,err := parseValue(r)
-	if err!= nil {
-		http.Error(w,"only post allowed",http.StatusBadRequest)
+	fmt.Println("HANDLE LENGTH -> METHOD:", r.Method, "PATH:", r.URL.Path)
+	n, from, to, err := parseValue(r)
+	if err != nil {
+		http.Error(w, "badrequest", http.StatusBadRequest)
 		return
 	}
 
@@ -41,6 +49,10 @@ func handleLength(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleWeight(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodGet {
+		http.ServeFile(w, r, "weight.html")
+		return
+	}
 	n, from, to, err := parseValue(r)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
@@ -50,7 +62,7 @@ func handleWeight(w http.ResponseWriter, r *http.Request) {
 	var result float64
 
 	switch {
-	
+
 	case from == "kilograms" && to == "grams":
 		result = n * 1000
 	case from == "grams" && to == "kilograms":
@@ -61,13 +73,11 @@ func handleWeight(w http.ResponseWriter, r *http.Request) {
 	case from == "pounds" && to == "kilograms":
 		result = n * 0.453592
 
-	
 	case from == "grams" && to == "pounds":
 		result = n * 0.00220462
 	case from == "pounds" && to == "grams":
 		result = n / 0.00220462
 
-	
 	case from == to:
 		result = n
 
@@ -82,6 +92,9 @@ func handleWeight(w http.ResponseWriter, r *http.Request) {
 	})
 }
 func handleTemp(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodGet {
+		http.ServeFile(w, r, "temperature.html")
+	}
 	n, from, to, err := parseValue(r)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
@@ -91,25 +104,22 @@ func handleTemp(w http.ResponseWriter, r *http.Request) {
 	var result float64
 
 	switch {
-	
+
 	case from == "celsius" && to == "kelvin":
 		result = n + 273.15
 	case from == "kelvin" && to == "celsius":
 		result = n - 273.15
 
-	
 	case from == "celsius" && to == "fahrenheit":
-		result = (n * 9/5) + 32
+		result = (n * 9 / 5) + 32
 	case from == "fahrenheit" && to == "celsius":
-		result = (n - 32) * 5/9
+		result = (n - 32) * 5 / 9
 
-	
 	case from == "kelvin" && to == "fahrenheit":
 		result = (n-273.15)*9/5 + 32
 	case from == "fahrenheit" && to == "kelvin":
 		result = (n-32)*5/9 + 273.15
 
-	
 	case from == to:
 		result = n
 
@@ -123,10 +133,7 @@ func handleTemp(w http.ResponseWriter, r *http.Request) {
 		"result": result,
 	})
 }
-func parseValue(r *http.Request) (float64, string, string, error){
-if r.Method != http.MethodPost {
-		return 0, "", "", fmt.Errorf("only POST allowed")
-	}
+func parseValue(r *http.Request) (float64, string, string, error) {
 
 	value := r.FormValue("value")
 	from := r.FormValue("from")
@@ -134,16 +141,17 @@ if r.Method != http.MethodPost {
 
 	n, err := strconv.ParseFloat(value, 64)
 	if err != nil {
-			return 0, "", "", fmt.Errorf("invalid number: %v", err)
+		return 0, "", "", fmt.Errorf("invalid number: %v", err)
 	}
- return n,from,to,nil
+	return n, from, to, nil
 }
 
 func main() {
-	http.HandleFunc("/index.html", handleLength)
-	http.HandleFunc("/weight.html", handleWeight)
-	http.HandleFunc("/temperature.html", handleTemp)
+	http.HandleFunc("/", home)
+	http.HandleFunc("/length", handleLength)
+	http.HandleFunc("/weight", handleWeight)
+	http.HandleFunc("/temperature", handleTemp)
 	fmt.Println("server is up and running")
-	http.ListenAndServe(":8080",nil)
+	http.ListenAndServe(":8080", nil)
 
 }
