@@ -15,7 +15,10 @@ func home(w http.ResponseWriter, r *http.Request) {
 	}
 }
 func handleLength(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("HANDLE LENGTH -> METHOD:", r.Method, "PATH:", r.URL.Path)
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
 	n, from, to, err := parseValue(r)
 	if err != nil {
 		http.Error(w, "badrequest", http.StatusBadRequest)
@@ -51,6 +54,10 @@ func handleLength(w http.ResponseWriter, r *http.Request) {
 func handleWeight(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
 		http.ServeFile(w, r, "weight.html")
+		return
+	}
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
 	n, from, to, err := parseValue(r)
@@ -94,6 +101,11 @@ func handleWeight(w http.ResponseWriter, r *http.Request) {
 func handleTemp(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
 		http.ServeFile(w, r, "temperature.html")
+		return
+	}
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
 	}
 	n, from, to, err := parseValue(r)
 	if err != nil {
