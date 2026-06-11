@@ -4,19 +4,6 @@ import (
 	"fmt"
 )
 
-func convert(n float64, from, to, convtype string) (float64, error) {
-	//convtype:= "length"
-	switch convtype {
-	case "length":
-		return convertLength(n, from, to)
-	case "weight":
-		return convertWeight(n, from, to)
-	case "temperature":
-		return convertTemperature(n, from, to)
-	default:
-		return 0, fmt.Errorf("invalid type")
-	}
-}
 func convertGeneric(n float64, from, to string, units map[string]Unit) (float64, error) {
 	if from == to {
 		return n, nil
@@ -74,30 +61,4 @@ var tempUnits = map[string]Unit{
 		ToBase:   func(n float64) float64 { return (n - 32) * 5 / 9 },
 		FromBase: func(n float64) float64 { return (n * 9 / 5) + 32 },
 	},
-}
-
-func convertWeight(n float64, from, to string) (float64, error) {
-	var kg float64
-
-	switch from {
-	case "kilograms":
-		kg = n
-	case "grams":
-		kg = n / 1000
-	case "pounds":
-		kg = n * 0.453592
-	default:
-		return 0, fmt.Errorf("invalid weight unit")
-	}
-
-	switch to {
-	case "kilograms":
-		return kg, nil
-	case "grams":
-		return kg * 1000, nil
-	case "pounds":
-		return kg * 2.20462, nil
-	default:
-		return 0, fmt.Errorf("invalid weight unit")
-	}
 }
