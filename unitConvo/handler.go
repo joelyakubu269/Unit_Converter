@@ -37,6 +37,10 @@ func handleConvert(w http.ResponseWriter, r *http.Request) {
 
 	}
 	unit := getUnits(convType)
+	if unit == nil {
+		http.NotFound(w, r)
+		return
+	}
 	result, err := convertGeneric(Input.Value, Input.From, Input.To, unit)
 	if err != nil {
 		tmpl.Execute(w, PageData{Error: err.Error()})
@@ -54,6 +58,8 @@ func getUnits(convtype string) map[string]Unit {
 		return weightUnits
 	case "temperature":
 		return tempUnits
+	default:
+		return nil
 	}
-	return nil
+
 }

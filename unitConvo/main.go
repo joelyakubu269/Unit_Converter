@@ -7,23 +7,6 @@ import (
 	"strconv"
 )
 
-//	func home(w http.ResponseWriter, r *http.Request) {
-//		if r.Method == http.MethodGet {
-//			http.ServeFile(w, r, "index.html")
-//			return
-//		}
-//	}
-func handleLength(w http.ResponseWriter, r *http.Request) {
-	handleConvert(w, r)
-}
-
-func handleWeight(w http.ResponseWriter, r *http.Request) {
-	handleConvert(w, r)
-}
-func handleTemp(w http.ResponseWriter, r *http.Request) {
-	handleConvert(w, r)
-}
-
 func parseForm(r *http.Request) (Input, error) {
 
 	value := r.FormValue("value")
