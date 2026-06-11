@@ -8,6 +8,8 @@ import (
 
 var tmpl = template.Must(template.ParseGlob("*.html"))
 
+//var units map[string]Unit // avoid using shared variables because of race condition
+
 func handleConvert(w http.ResponseWriter, r *http.Request) {
 	convType := strings.TrimPrefix(r.URL.Path, "/")
 
@@ -34,29 +36,24 @@ func handleConvert(w http.ResponseWriter, r *http.Request) {
 		return
 
 	}
-	switch convType {
-	case "length":
-		result, err := convertGeneric(Input.Value, Input.From, Input.To, lengthUnits)
-		if err != nil {
-			tmpl.Execute(w, PageData{Error: err.Error()})
-			return
-		}
-		tmpl.Execute(w, PageData{Result: result})
-	case "weight":
-		result, err := convertGeneric(Input.Value, Input.From, Input.To, weightUnits)
-		if err != nil {
-			tmpl.Execute(w, PageData{Error: err.Error()})
-			return
-		}
-		tmpl.Execute(w, PageData{Result: result})
-	case "temperature":
-		result, err := convertGeneric(Input.Value, Input.From, Input.To, tempUnits)
-		if err != nil {
-			tmpl.Execute(w, PageData{Error: err.Error()})
-			return
-		}
-		tmpl.Execute(w, PageData{Result: result})
+	unit := getUnits(convType)
+	result, err := convertGeneric(Input.Value, Input.From, Input.To, unit)
+	if err != nil {
+		tmpl.Execute(w, PageData{Error: err.Error()})
+		return
 	}
+	tmpl.Execute(w, PageData{Result: result})
+
 }
 
-func handleExecute(float64, error)
+func getUnits(convtype string) map[string]Unit {
+	switch convtype {
+	case "length":
+		return lengthUnits
+	case "weight":
+		return weightUnits
+	case "temperature":
+		return tempUnits
+	}
+	return nil
+}
