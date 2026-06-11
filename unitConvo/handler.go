@@ -24,7 +24,7 @@ func handleConvert(w http.ResponseWriter, r *http.Request) {
 		return
 
 	}
-	result, err := convert(n, from, to)
+	result, err := convert(n, from, to, r.URL.Path)
 	if err != nil {
 		tmpl.Execute(w, PageData{Error: err.Error()})
 		return
