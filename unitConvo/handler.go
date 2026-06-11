@@ -14,14 +14,9 @@ func handleConvert(w http.ResponseWriter, r *http.Request) {
 	convType := strings.TrimPrefix(r.URL.Path, "/")
 
 	if r.Method == http.MethodGet {
-		switch convType {
-		case "length", "weight", "temperature":
-			tmpl.ExecuteTemplate(w, convType+".html", nil) // did convtype so i can know which page to return
-			return
-		default:
-			http.NotFound(w, r)
-			return
-		}
+
+		tmpl.ExecuteTemplate(w, convType+".html", nil) // did convtype so i can know which page to return
+		return
 
 	}
 
@@ -47,19 +42,5 @@ func handleConvert(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	tmpl.Execute(w, PageData{Result: result})
-
-}
-
-func getUnits(convtype string) map[string]Unit {
-	switch convtype {
-	case "length":
-		return lengthUnits
-	case "weight":
-		return weightUnits
-	case "temperature":
-		return tempUnits
-	default:
-		return nil
-	}
 
 }
