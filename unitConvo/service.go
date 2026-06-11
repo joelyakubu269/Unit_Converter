@@ -61,31 +61,6 @@ var tempUnits = map[string]Unit{
 	},
 }
 
-func convertTemperature(n float64, from, to string) (float64, error) {
-	var result float64
-
-	switch from {
-	case "celsius":
-		result = n
-	case "kelvin":
-		result = n - 273.15
-	case "fahrenheit":
-		result = (n - 32) * 5 / 9
-	default:
-		return 0, fmt.Errorf("invalid temperature unit")
-	}
-	switch to {
-	case "celsius":
-		return result, nil
-	case "kelvin":
-		return result + 273.15, nil
-	case "fahrenheit":
-		return (result * 9 / 5) + 32, nil
-	default:
-		return 0, fmt.Errorf("invalid temperature unit")
-	}
-
-}
 func convertWeight(n float64, from, to string) (float64, error) {
 	var kg float64
 
