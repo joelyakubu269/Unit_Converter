@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-var tmpl = template.Must(template.ParseFiles("index.html"))
+var tmpl = template.Must(template.ParseGlob("*.html"))
 
 func handleConvert(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
