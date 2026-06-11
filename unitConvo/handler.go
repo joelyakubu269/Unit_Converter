@@ -12,8 +12,15 @@ func handleConvert(w http.ResponseWriter, r *http.Request) {
 	convType := strings.TrimPrefix(r.URL.Path, "/")
 
 	if r.Method == http.MethodGet {
-		tmpl.ExecuteTemplate(w, convType+".html", nil) // did convtype so i can know which page to return
-		return
+		switch convType {
+		case "length", "weight", "temperature":
+			tmpl.ExecuteTemplate(w, convType+".html", nil) // did convtype so i can know which page to return
+			return
+		default:
+			http.NotFound(w, r)
+			return
+		}
+
 	}
 
 	if r.Method != http.MethodPost {
