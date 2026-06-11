@@ -20,7 +20,7 @@ func convertGeneric(n float64, from, to string, units map[string]Unit) (float64,
 	return toUnit.FromBase(base), nil
 }
 
-var lengthunits = map[string]Unit{
+var lengthUnits = map[string]Unit{
 	"metres": {
 		ToBase:   func(n float64) float64 { return n },
 		FromBase: func(n float64) float64 { return n },
