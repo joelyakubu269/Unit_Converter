@@ -17,29 +17,7 @@ func convert(n float64, from, to, convtype string) (float64, error) {
 		return 0, fmt.Errorf("invalid type")
 	}
 }
-func convertLength(n float64, from, to string) (float64, error) {
-	var result float64
-	switch from {
-	case "metres":
-		result = n
-	case "kilometres":
-		result = n * 1000
-	case "centimetres":
-		result = n * 100
-	default:
-		return 0, fmt.Errorf("invalid conversion type")
-	}
-	switch to {
-	case "metres":
-		return result, nil
-	case "kilometres":
-		return result / 1000, nil
-	case "centimetres":
-		return result * 100, nil
-	default:
-		return 0, fmt.Errorf("invalid conversion type")
-	}
-}
+
 func convertTemperature(n float64, from, to string) (float64, error) {
 	var result float64
 
