@@ -10,8 +10,9 @@ var tmpl = template.Must(template.ParseGlob("*.html"))
 
 func handleConvert(w http.ResponseWriter, r *http.Request) {
 	convType := strings.TrimPrefix(r.URL.Path, "/")
+
 	if r.Method == http.MethodGet {
-		tmpl.ExecuteTemplate(w, nil)
+		tmpl.ExecuteTemplate(w, convType+".html", nil)
 		return
 	}
 
@@ -20,13 +21,13 @@ func handleConvert(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	n, from, to, err := parseForm(r)
+	Input, err := parseForm(r)
 	if err != nil {
 		tmpl.Execute(w, PageData{Error: err.Error()})
 		return
 
 	}
-	result, err := convert(n, from, to, r.URL.Path)
+	result, err := convert(Input.Value, Input.From, Input.To, convType)
 	if err != nil {
 		tmpl.Execute(w, PageData{Error: err.Error()})
 		return

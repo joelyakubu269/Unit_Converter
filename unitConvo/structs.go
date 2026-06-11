@@ -11,3 +11,7 @@ type Input struct {
 	From  string
 	To    string
 }
+type Unit struct {
+	ToBase   func(float64) float64
+	FromBase func(float64) float64
+}
