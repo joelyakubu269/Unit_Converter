@@ -4,8 +4,9 @@ import (
 	"fmt"
 )
 
-func convert(n float64, from, to, convType string) (float64, error) {
-	switch convType {
+func convert(n float64, from, to, convtype string) (float64, error) {
+	//convtype:= "length"
+	switch convtype {
 	case "length":
 		return convertLength(n, from, to)
 	case "weight":
