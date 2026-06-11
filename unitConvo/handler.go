@@ -18,13 +18,13 @@ func handleConvert(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	n, from, to, convType, err := parseForm(r)
+	n, from, to, err := parseForm(r)
 	if err != nil {
 		tmpl.Execute(w, PageData{Error: err.Error()})
 		return
 
 	}
-	result, err := convert(n, from, to, convType)
+	result, err := convert(n, from, to)
 	if err != nil {
 		tmpl.Execute(w, PageData{Error: err.Error()})
 		return
