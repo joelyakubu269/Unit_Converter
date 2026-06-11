@@ -6,4 +6,8 @@ type PageData struct {
 	Result float64
 	Error  string
 }
-
+type Input struct {
+	Value float64
+	From  string
+	To    string
+}

@@ -7,11 +7,11 @@ import (
 func convert(n float64, from, to, convtype string) (float64, error) {
 	//convtype:= "length"
 	switch convtype {
-	case "/length":
+	case "length":
 		return convertLength(n, from, to)
-	case "/weight":
+	case "weight":
 		return convertWeight(n, from, to)
-	case "/temperature":
+	case "temperature":
 		return convertTemperature(n, from, to)
 	default:
 		return 0, fmt.Errorf("invalid type")
@@ -33,7 +33,7 @@ func convertLength(n float64, from, to string) (float64, error) {
 	case "metres":
 		return result, nil
 	case "kilometres":
-		return result * 1000, nil
+		return result / 1000, nil
 	case "centimetres":
 		return result * 100, nil
 	default:
