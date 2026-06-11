@@ -17,6 +17,14 @@ func convert(n float64, from, to, convtype string) (float64, error) {
 		return 0, fmt.Errorf("invalid type")
 	}
 }
+func convertGeneric(n float64, from, to string, units map[string]Unit) (float64, error) {
+	fromUnit, ok := units[from]
+	if !ok {
+		return 0, fmt.Errorf("invalid unit: %s does not exist", from)
+	}
+	toUnit, ok := units[to]
+
+}
 
 var lengthunits = map[string]Unit{
 	"metres": {
