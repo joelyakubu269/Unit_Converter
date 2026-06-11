@@ -24,21 +24,27 @@ func handleTemp(w http.ResponseWriter, r *http.Request) {
 	handleConvert(w, r)
 }
 
-func parseForm(r *http.Request) (float64, string, string, error) {
+func parseForm(r *http.Request) (Input, error) {
 
 	value := r.FormValue("value")
 	from := r.FormValue("from")
 	to := r.FormValue("to")
-	//convType := r.FormValue("type")
+	if value == "" || from == "" || to == "" {
+		return Input{}, fmt.Errorf("required fields are missing")
+	}
 	n, err := strconv.ParseFloat(value, 64)
 	if err != nil {
-		return 0, "", "", fmt.Errorf("invalid Number")
+		return Input{}, fmt.Errorf("invalid Number %v", err)
 	}
-	return n, from, to, err
+	return Input{
+		Value: n,
+		From:  from,
+		To:    to,
+	}, nil
 }
 
 func main() {
-	http.HandleFunc("/", home)
+
 	http.HandleFunc("/length", handleLength)
 	http.HandleFunc("/weight", handleWeight)
 	http.HandleFunc("/temperature", handleTemp)
