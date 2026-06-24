@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-
+	http.Handle("/", http.FileServer(http.Dir(".")))
 	http.HandleFunc("/length", handleConvert)
 	http.HandleFunc("/weight", handleConvert)
 	http.HandleFunc("/temperature", handleConvert)
